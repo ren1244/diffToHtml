@@ -47,7 +47,9 @@ void cvector_struct_name##_free(cvector_struct_name* v)\
 cvector_type* cvector_struct_name##_realloc(cvector_struct_name* v,int sz)\
 {\
 	cvector_type *p;\
-	for(;v->C<sz;v->C*=2);\
+	if(v->C>=sz)\
+		return v->A;\
+	for(v->C*=2;v->C<sz;v->C*=2);\
 	if(v->A==NULL)\
 		return NULL;\
 	p=realloc(v->A,v->C*sizeof(cvector_type));\
